@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: tteoh/kasm-qgis:$TAG
+      - image: tteoh/kasm-qgis:latest
       - auth:
           username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
@@ -16,7 +16,6 @@ jobs:
 
       # build and push Docker image
       - run: |
-          TAG=0.1.$CIRCLE_BUILD_NUM
-          docker build -t tteoh/kasm-qgis:$TAG .
+          docker build -t tteoh/kasm-qgis:latest .
           echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-          docker push tteoh/kasm-qgis:$TAG
+          docker push tteoh/kasm-qgis:latest
