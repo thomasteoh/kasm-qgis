@@ -12,7 +12,6 @@ WORKDIR $HOME
 # -----
 
 LABEL maintainer="Thomas Teoh <me@tteoh.com>"
-LABEL description="kasm-qgis:centos"
 
 # Install dependencies
 RUN apt-get install -y gnupg software-properties-common
