@@ -3,8 +3,8 @@ jobs:
   build:
     docker:
       - image: tteoh/kasm-qgis:$TAG
-        auth:
-                username: $DOCKERHUB_USERNAME
+      - auth:
+          username: $DOCKERHUB_USERNAME
           password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
     steps:
       - checkout
