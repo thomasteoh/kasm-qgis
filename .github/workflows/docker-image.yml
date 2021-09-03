@@ -14,9 +14,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag tteoh/kasm-qgis:$(date +%s)
     - name: Login to Docker
       run: echo {{ secrets.DOCKER_TOKEN }} | docker login --username {{ secrets.DOCKER_USER }} --password-stdin
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag tteoh/kasm-qgis:$(date +%s)
     - name: Publish Docker image
       run: docker push tteoh/kasm-qgis:$(date +%s)
