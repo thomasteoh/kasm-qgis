@@ -2,7 +2,7 @@
 
 [Kasm Workspaces](https://www.kasmweb.com/) is a platform for streaming containerised apps and desktops to end-users. QGIS is a desktop geographic information system. This Docker image is the current Kasm distribution of Ubuntu Bionic (18.04) with QGIS 3.0 pre-installed. 
 
-image
+![image](https://user-images.githubusercontent.com/7086928/131963278-af058acb-456a-4c68-b807-d0164d375f89.png)
 
 The docker image is available on dockerhub [here](https://hub.docker.com/r/tteoh/kasm-qgis)
 
