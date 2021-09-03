@@ -1,21 +1,15 @@
-version: 2.1
+version: 2
 jobs:
-  build:
-    docker:
-      - image: tteoh/kasm-qgis:latest
-      - auth:
-          username: $DOCKERHUB_USERNAME
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
-    steps:
-      - checkout
-      # ... steps for building/testing app ...
+ build:
+   machine: true
+   steps:
+     - checkout
+     # login
+     - run: |
+         echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
 
-      - setup_remote_docker:
-          version: 19.03.13
-          docker_layer_caching: true
+     # build the application image
+     - run: docker build -t tteoh/kasm-qgis:$CIRCLE_BRANCH .
 
-      # build and push Docker image
-      - run: |
-          docker build -t tteoh/kasm-qgis:latest .
-          echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-          docker push tteoh/kasm-qgis:latest
+     # deploy the image
+     - run: docker push tteoh/kasm-qgis:$CIRCLE_BRANCH
