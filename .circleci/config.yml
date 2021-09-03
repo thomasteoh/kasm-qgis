@@ -1,14 +1,22 @@
-version: 2
+version: 2.1
 jobs:
- build:
-   machine: true
-   steps:
-     - checkout
-     # login
-     - run: docker login --username $DOCKER_USER --password '$DOCKER_PASS'
+  build:
+    docker:
+      - image: cimg/base:2021.04
+        auth:
+          username: $DOCKERHUB_USERNAME
+          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+    steps:
+      - checkout
+      # ... steps for building/testing app ...
 
-     # build the application image
-     - run: docker build -t tteoh/kasm-qgis:$CIRCLE_BRANCH .
+      - setup_remote_docker:
+          version: 19.03.13
+          docker_layer_caching: true
 
-     # deploy the image
-     - run: docker push tteoh/kasm-qgis:$CIRCLE_BRANCH
+      # build and push Docker image
+      - run: |
+          TAG=0.1.$CIRCLE_BUILD_NUM
+          docker build -t tteoh/kasm-qgis:$TAG .
+          echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+          docker push tteoh/kasm-qgis:$TAG
