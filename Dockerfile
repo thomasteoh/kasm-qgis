@@ -30,6 +30,9 @@ RUN apt-get update
 #   add `yes` to answer a prompt for disk usage.  Worth reading the docs on this simple tool:  `man yes`
 RUN yes | apt-get install -y qgis qgis-plugin-grass
 
+# Install other programs
+RUN apt-get install -y firefox git
+
 ######### End Customizations ###########
 
 RUN chown 1000:0 $HOME
