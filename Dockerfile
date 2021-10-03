@@ -1,5 +1,5 @@
 # Use the ubuntu base image from kasmweb
-FROM kasmweb/core-ubuntu-bionic:1.9.0
+FROM kasmweb/core-ubuntu-bionic:1.9.0 as base
 
 # Run as root
 USER root
@@ -40,6 +40,15 @@ RUN yes | apt-get install -y qgis qgis-plugin-grass
 # - firefox for accessing web gui for filesharing services, from which files can accessed from and saved to
 # - git for accessing source controlled repositories with geospatial information
 RUN apt-get install -y firefox git
+
+# If test, check whether qgis has installed correctly
+FROM base as test
+
+# Run qgis --help to check whether QGIS was installed correctly
+RUN qgis --help
+
+# If production, complete the build of the kasm image
+FROM base as production
 
 ######### End Customizations ###########
 
