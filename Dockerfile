@@ -1,9 +1,15 @@
-FROM kasmweb/core-ubuntu-bionic:1.9.0                                                                                                                                                                              
+# Use the ubuntu base image from kasmweb
+FROM kasmweb/core-ubuntu-bionic:1.9.0
+
+# Run as root
 USER root
 
+# Set environment variables
 ENV HOME /home/kasm-default-profile
 ENV STARTUPDIR /dockerstartup
 ENV INST_SCRIPTS $STARTUPDIR/install
+
+# Set working directory
 WORKDIR $HOME
 
 
@@ -13,7 +19,7 @@ WORKDIR $HOME
 
 LABEL maintainer="Thomas Teoh <me@tteoh.com>"
 
-# Install dependencies
+# Install dependencies - to work with repository signing keys
 RUN apt-get install -y gnupg software-properties-common
 
 # Retrieve the QGIS signing key
@@ -31,6 +37,8 @@ RUN apt-get update
 RUN yes | apt-get install -y qgis qgis-plugin-grass
 
 # Install other programs
+# - firefox for accessing web gui for filesharing services, from which files can accessed from and saved to
+# - git for accessing source controlled repositories with geospatial information
 RUN apt-get install -y firefox git
 
 ######### End Customizations ###########
